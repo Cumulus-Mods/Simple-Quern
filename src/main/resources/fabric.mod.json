@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "MODID",
+  "id": "simplequern",
   "version": "${version}",
 
-  "name": "MODID",
-  "description": "MODID",
+  "name": "Simple Quern",
+  "description": "Adds the quern, a block allowing for simple ore-doubling",
   "authors": [
     "Wtoll"
   ],
   "contact": {
-    "homepage": "https://github.com/Wtoll/MODID",
-    "sources": "https://github.com/Wtoll/MODID"
+    "homepage": "https://github.com/Wtoll/simplequern",
+    "sources": "https://github.com/Wtoll/simplequern"
   },
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/simplequern/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.wtoll.MODID.MODID"
+    "com.wtoll.simplequern.SimpleQuern"
     ]
   },
   "mixins": [
-    "MODID.mixins.json"
+    "simplequern.mixins.json"
   ],
 
   "depends": {
