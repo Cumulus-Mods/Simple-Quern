@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
     "com.wtoll.simplequern.SimpleQuern"
+    ],
+    "client": [
+      "com.wtoll.simplequern.client.SimpleQuernClient"
     ]
   },
   "mixins": [
