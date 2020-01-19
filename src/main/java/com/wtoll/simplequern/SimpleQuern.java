@@ -9,9 +9,12 @@ import com.wtoll.simplequern.recipe.RecipeType;
 import com.wtoll.simplequern.stat.Stats;
 import net.fabricmc.api.ModInitializer;
 
-//TODO: Finalize
 public class SimpleQuern implements ModInitializer {
     public static final String MODID = "simplequern";
+
+    // Two issues
+    // The handstones don't break after
+    // The tiers don't work
 
     @Override
     public void onInitialize() {

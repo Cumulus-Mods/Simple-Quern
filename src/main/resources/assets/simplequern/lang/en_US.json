@@ -1,6 +1,9 @@
 {
   "container.quern": "Quern",
   "item.simplequern.handstone": "Handstone",
-  "item.simeplquern.diamond_handstone": "Diamond Toothed Handstone",
-  "item.simplequern.obsidian_handstone": "Obsidian Handstone"
+  "item.simplequern.diamond_handstone": "Diamond Toothed Handstone",
+  "item.simplequern.obsidian_handstone": "Obsidian Handstone",
+  "block.simplequern.quern": "Quern",
+  "item.simplequern.iron_dust": "Iron Dust",
+  "item.simplequern.gold_dust": "Gold Dust"
 }

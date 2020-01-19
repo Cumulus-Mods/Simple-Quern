@@ -16,6 +16,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeFinder;
 import net.minecraft.recipe.RecipeInputProvider;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DefaultedList;
@@ -87,9 +90,12 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             if (this.canAcceptRecipeOutput(recipe)) {
                 this.grindTime++;
                 if (this.grindTime > 5) {
-                    this.inventory.get(1).damage(1, player, null);
+                    this.inventory.get(1).damage(1, player, (pp) -> {
+                        System.out.println("idk");
+                    });
                     this.grindTime = 0;
                     this.craftRecipe(recipe);
+                    world.playSound((double) this.pos.getX(), (double) this.pos.getY(), (double) this.pos.getZ(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f, true);
                     dirty = true;
                 }
             }

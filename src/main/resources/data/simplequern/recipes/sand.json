@@ -1,11 +1,11 @@
 {
   "type": "simplequern:grinding",
   "ingredient": {
-    "item": "minecraft:sugar_cane"
+    "item": "minecraft:gravel"
   },
   "tier": 1,
   "result": {
-    "item": "minecraft:sugar",
-    "count": 4
+    "item": "minecraft:sand",
+    "count": 1
   }
 }

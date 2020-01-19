@@ -85,10 +85,10 @@ public class GrindingRecipe implements Recipe<Inventory> {
     public boolean matches(Inventory inv, World world) {
         ItemStack item = inv.getInvStack(0);
         ItemStack tool = inv.getInvStack(1);
-        if ((((Handstone) tool.getItem()).grindLevel() <= this.grindLevel)) {
+        if ((((Handstone) tool.getItem()).grindLevel() >= this.grindLevel)) {
             return this.input.test(item);
         }
-        return true;
+        return false;
     }
 
     @Override

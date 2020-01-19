@@ -1,11 +1,11 @@
 {
   "type": "simplequern:grinding",
   "ingredient": {
-    "item": "minecraft:sugar_cane"
+    "item": "minecraft:glowstone"
   },
-  "tier": 1,
+  "tier": 3,
   "result": {
-    "item": "minecraft:sugar",
+    "item": "minecraft:glowstone_dust",
     "count": 4
   }
 }

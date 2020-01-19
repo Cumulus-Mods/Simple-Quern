@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "handstone=false":  { "model": "simplequern:block/quern" },
+        "handstone=true":  { "model": "simplequern:block/quern_handstone" }
+    }
+}

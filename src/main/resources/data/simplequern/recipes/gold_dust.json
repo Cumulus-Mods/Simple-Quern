@@ -1,0 +1,11 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "minecraft:gold_ore"
+  },
+  "tier": 2,
+  "result": {
+    "item": "simplequern:gold_dust",
+    "count": 2
+  }
+}

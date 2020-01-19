@@ -1,11 +1,11 @@
 {
   "type": "simplequern:grinding",
   "ingredient": {
-    "item": "minecraft:sugar_cane"
+    "item": "minecraft:quartz_block"
   },
-  "tier": 1,
+  "tier": 3,
   "result": {
-    "item": "minecraft:sugar",
+    "item": "minecraft:quartz",
     "count": 4
   }
 }
