@@ -24,7 +24,6 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.math.Direction;
 
-import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.Random;
 
