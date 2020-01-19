@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "simplequern:iron_dust"
+    "tag": "minecraft:iron_dust"
   },
   "result": "minecraft:iron_ingot",
   "experience": 0.7,

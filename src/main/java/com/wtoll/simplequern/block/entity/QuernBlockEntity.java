@@ -103,7 +103,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         if (dirty) markDirty();
     }
 
-    protected boolean canAcceptRecipeOutput(@Nullable Recipe<?> recipe) {
+    protected boolean canAcceptRecipeOutput(Recipe<?> recipe) {
         if (!(this.inventory.get(0)).isEmpty() && recipe != null) {
             ItemStack result = recipe.getOutput();
             if (result.isEmpty()) {
@@ -125,7 +125,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         }
     }
 
-    private void craftRecipe(@Nullable Recipe<?> recipe) {
+    private void craftRecipe(Recipe<?> recipe) {
         if (recipe != null && this.canAcceptRecipeOutput(recipe)) {
             ItemStack input = this.inventory.get(0);
             ItemStack result = recipe.getOutput();
@@ -158,7 +158,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    public boolean canInsertInvStack(int slot, ItemStack stack, @Nullable Direction dir) {
+    public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
         return this.isValidInvStack(slot, stack);
     }
 

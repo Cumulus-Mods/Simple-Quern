@@ -22,8 +22,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
 public class QuernBlock extends BlockWithEntity {
 
     public static final BooleanProperty HANDSTONE;
@@ -34,7 +32,6 @@ public class QuernBlock extends BlockWithEntity {
         this.setDefaultState(this.stateManager.getDefaultState().with(HANDSTONE, false));
     }
 
-    @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockView view) {
         return new QuernBlockEntity();

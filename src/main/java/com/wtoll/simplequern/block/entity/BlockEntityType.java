@@ -8,7 +8,7 @@ public class BlockEntityType {
     public static final net.minecraft.block.entity.BlockEntityType<QuernBlockEntity> QUERN;
 
     static {
-        QUERN = Registry.register(Registry.BLOCK_ENTITY, Utility.id("quern"), net.minecraft.block.entity.BlockEntityType.Builder.create(QuernBlockEntity::new, Blocks.QUERN).build(null));
+        QUERN = Registry.register(Registry.BLOCK_ENTITY_TYPE, Utility.id("quern"), net.minecraft.block.entity.BlockEntityType.Builder.create(QuernBlockEntity::new, Blocks.QUERN).build(null));
     }
 
     public static void initialize() {  }
