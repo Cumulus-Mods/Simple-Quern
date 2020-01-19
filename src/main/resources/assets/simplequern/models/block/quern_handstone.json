@@ -1,5 +1,5 @@
 {
-	"parent": "block/block",
+	"parent": "block/cube",
 	"textures": {
 		"0": "simplequern:block/quern",
 		"1": "simplequern:block/quern_bottom",
