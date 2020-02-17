@@ -30,7 +30,6 @@ public class GrindingRecipe implements Recipe<Inventory> {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public String getGroup() {
         return this.group;
     }

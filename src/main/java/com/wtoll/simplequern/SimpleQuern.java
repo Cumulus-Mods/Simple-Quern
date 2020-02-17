@@ -12,10 +12,6 @@ import net.fabricmc.api.ModInitializer;
 public class SimpleQuern implements ModInitializer {
     public static final String MODID = "simplequern";
 
-    // Two issues
-    // The handstones don't break after
-    // The tiers don't work
-
     @Override
     public void onInitialize() {
         Stats.initialize();

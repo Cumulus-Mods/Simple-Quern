@@ -140,6 +140,10 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             tool.damage(1, new Random(), null);
             input.decrement(1);
 
+            if (tool.getDamage() >= tool.getMaxDamage()) {
+                tool.decrement(1);
+            }
+
             markDirty();
         }
     }
