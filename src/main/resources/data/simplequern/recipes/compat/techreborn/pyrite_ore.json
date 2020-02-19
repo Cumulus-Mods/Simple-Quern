@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "techreborn:pyrite_ore"
+  },
+  "tier": 2,
+  "time": 5,
+  "result": {
+    "item": "techreborn:pyrite_dust",
+    "count": 2
+  }
+}

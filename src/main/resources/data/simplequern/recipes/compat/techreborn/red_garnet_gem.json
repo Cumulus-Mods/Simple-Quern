@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "techreborn:red_garnet_gem"
+  },
+  "tier": 3,
+  "time": 5,
+  "result": {
+    "item": "techreborn:red_garnet_dust",
+    "count": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "techreborn:steel_ingot"
+  },
+  "tier": 2,
+  "time": 5,
+  "result": {
+    "item": "techreborn:steel_dust",
+    "count": 1
+  }
+}

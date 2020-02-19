@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "techreborn:ruby_ore"
+  },
+  "tier": 3,
+  "time": 5,
+  "result": {
+    "item": "techreborn:ruby_dust",
+    "count": 2
+  }
+}

@@ -1,12 +1,12 @@
 {
   "type": "simplequern:grinding",
   "ingredient": {
-    "item": "minecraft:bone"
+    "item": "minecraft:prismarine_shard"
   },
   "tier": 1,
   "time": 5,
   "result": {
-    "item": "minecraft:bone_meal",
-    "count": 6
+    "item": "minecraft:prismarine_crystals",
+    "count": 1
   }
 }

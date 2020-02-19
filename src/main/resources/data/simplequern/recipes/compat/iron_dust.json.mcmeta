@@ -1,0 +1,13 @@
+{
+    "when": [
+        {
+            "lidcd:not": {
+                "lidcd:or" [
+                    {
+                        "libcd:mod_loaded": "techreborn"
+                    }
+                ]
+            }
+        }
+    ]
+}
