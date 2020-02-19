@@ -43,9 +43,8 @@ public class QuernScreen extends ContainerScreen {
         int i = this.x;
         int j = this.y;
         this.blit(i, j, 0, 0, this.containerWidth, this.containerHeight);
-        int l;
 
-        l = ((QuernContainer)this.container).getGrindProgress();
-        this.blit(i + 79, j + 34, 176, 14, (int) (l*((float)23/5) + 1), 16);
+        float l = ((QuernContainer)this.container).getGrindProportion();
+        this.blit(i + 79, j + 34, 176, 14, (int) (l*((float)23) + 1), 16);
     }
 }

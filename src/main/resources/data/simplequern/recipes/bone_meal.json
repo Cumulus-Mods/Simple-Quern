@@ -4,6 +4,7 @@
     "item": "minecraft:bone"
   },
   "tier": 1,
+  "time": 5,
   "result": {
     "item": "minecraft:bone_meal",
     "count": 4

@@ -24,8 +24,9 @@ public class GrindingRecipeSerializer implements RecipeSerializer<GrindingRecipe
         JsonElement object = JsonHelper.hasArray(jsonObject, "ingredient") ? JsonHelper.getArray(jsonObject, "ingredient") : JsonHelper.getObject(jsonObject, "ingredient");
         Ingredient input = Ingredient.fromJson(object);
         int grindLevel = JsonHelper.getInt(jsonObject, "tier");
+        int grindTime = JsonHelper.getInt(jsonObject, "time");
         ItemStack output = ShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result"));
-        return this.recipeFactory.create(identifier, group, input, grindLevel, output);
+        return this.recipeFactory.create(identifier, group, input, grindLevel, grindTime, output);
     }
 
     @Override
@@ -33,8 +34,9 @@ public class GrindingRecipeSerializer implements RecipeSerializer<GrindingRecipe
         String group = packetByteBuf.readString(32767);
         Ingredient input = Ingredient.fromPacket(packetByteBuf);
         int grindLevel =  packetByteBuf.readInt();
+        int grindTime = packetByteBuf.readInt();
         ItemStack output = packetByteBuf.readItemStack();
-        return this.recipeFactory.create(identifier, group, input, grindLevel, output);
+        return this.recipeFactory.create(identifier, group, input, grindLevel, grindTime, output);
     }
 
     @Override
@@ -42,10 +44,11 @@ public class GrindingRecipeSerializer implements RecipeSerializer<GrindingRecipe
         packetByteBuf.writeString(grindingRecipe.getGroup());
         grindingRecipe.getInput().write(packetByteBuf);
         packetByteBuf.writeInt(grindingRecipe.getGrindLevel());
+        packetByteBuf.writeInt(grindingRecipe.getGrindTime());
         packetByteBuf.writeItemStack(grindingRecipe.getOutput());
     }
 
     interface RecipeFactory {
-        GrindingRecipe create(Identifier id, String group, Ingredient input, int grindLevel, ItemStack output);
+        GrindingRecipe create(Identifier id, String group, Ingredient input, int grindLevel, int grindTime, ItemStack output);
     }
 }

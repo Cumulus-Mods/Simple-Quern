@@ -18,15 +18,17 @@ public class GrindingRecipe implements Recipe<Inventory> {
     private final Ingredient input;
     private final ItemStack output;
     private final int grindLevel;
+    private final int grindTime;
     private final Identifier id;
     private final String group;
 
-    public GrindingRecipe(Identifier id, String group, Ingredient input, int grindLevel, ItemStack output) {
+    public GrindingRecipe(Identifier id, String group, Ingredient input, int grindLevel, int grindTime, ItemStack output) {
         this.id = id;
         this.group = group;
         this.input = input;
         this.output = output;
         this.grindLevel = grindLevel;
+        this.grindTime = grindTime;
     }
 
     @Override
@@ -45,6 +47,10 @@ public class GrindingRecipe implements Recipe<Inventory> {
 
     public int getGrindLevel() {
         return this.grindLevel;
+    }
+
+    public int getGrindTime() {
+        return this.grindTime;
     }
 
     @Override
@@ -84,7 +90,7 @@ public class GrindingRecipe implements Recipe<Inventory> {
     public boolean matches(Inventory inv, World world) {
         ItemStack item = inv.getInvStack(0);
         ItemStack tool = inv.getInvStack(1);
-        if ((((Handstone) tool.getItem()).grindLevel() >= this.grindLevel)) {
+        if (tool.getItem() instanceof Handstone && (((Handstone) tool.getItem()).grindLevel() >= this.grindLevel)) {
             return this.input.test(item);
         }
         return false;

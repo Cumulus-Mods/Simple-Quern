@@ -24,6 +24,7 @@ public class QuernContainer extends CraftingContainer<Inventory> {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
     protected final World world;
+    private final BlockPos pos;
 
     public QuernContainer(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, BlockPos.ORIGIN);
@@ -33,6 +34,7 @@ public class QuernContainer extends CraftingContainer<Inventory> {
         super(null, syncId);
         this.world = playerInventory.player.world;
         BlockEntity entity = world.getBlockEntity(pos);
+        this.pos = pos;
         if (entity != null && entity instanceof QuernBlockEntity) {
             this.inventory = ((QuernBlockEntity) entity);
             this.propertyDelegate = ((QuernBlockEntity) entity).getPropertyDelegate();
@@ -64,6 +66,14 @@ public class QuernContainer extends CraftingContainer<Inventory> {
 
     public int getGrindProgress() {
         return this.propertyDelegate.get(0);
+    }
+
+    public int getGrindRequired() {
+        return this.propertyDelegate.get(1);
+    }
+
+    public float getGrindProportion() {
+        return (float) getGrindProgress() / (float) getGrindRequired();
     }
 
     public void populateRecipeFinder(RecipeFinder recipeFinder) {

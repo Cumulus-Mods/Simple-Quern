@@ -4,6 +4,7 @@
     "item": "minecraft:gold_ore"
   },
   "tier": 2,
+  "time": 5,
   "result": {
     "item": "simplequern:gold_dust",
     "count": 2
