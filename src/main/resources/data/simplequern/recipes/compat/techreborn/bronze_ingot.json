@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "techreborn:bronze_ingot"
+  },
+  "tier": 2,
+  "time": 5,
+  "result": {
+    "item": "techreborn:bronze_dust",
+    "count": 1
+  }
+}

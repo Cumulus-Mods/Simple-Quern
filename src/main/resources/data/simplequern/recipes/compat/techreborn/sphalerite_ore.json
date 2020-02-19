@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "techreborn:sphalerite_ore"
+  },
+  "tier": 2,
+  "time": 5,
+  "result": {
+    "item": "techreborn:sphalerite_dust",
+    "count": 2
+  }
+}

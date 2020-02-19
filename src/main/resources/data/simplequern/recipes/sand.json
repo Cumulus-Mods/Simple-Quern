@@ -4,6 +4,7 @@
     "item": "minecraft:gravel"
   },
   "tier": 1,
+  "time": 5,
   "result": {
     "item": "minecraft:sand",
     "count": 1

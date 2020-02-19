@@ -4,6 +4,7 @@
     "item": "minecraft:cobblestone"
   },
   "tier": 1,
+  "time": 5,
   "result": {
     "item": "minecraft:gravel",
     "count": 1

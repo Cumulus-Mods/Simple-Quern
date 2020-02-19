@@ -13,6 +13,23 @@ group = project.maven_group
 minecraft {
 }
 
+repositories {
+	mavenCentral()
+	maven {
+		name = "CurseForge"
+		url = "https://minecraft.curseforge.com/api/maven/"
+	}
+	maven {
+		name = "JitPack"
+		url = "https://www.jitpack.io"
+	}
+
+	maven {
+		name = "B0undaryBreaker"
+		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
+	}
+}
+
 dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -24,6 +41,12 @@ dependencies {
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
+	modImplementation ("io.github.cottonmc:LibCD:${project.lib_cd_version}") {
+		exclude(group : "net.fabricmc.fabric-api")
+		exclude module: "modmenu"
+	}
+
+	// modCompileOnly "TechReborn:TechReborn-1.15:${project.tr_version}"
 }
 
 processResources {

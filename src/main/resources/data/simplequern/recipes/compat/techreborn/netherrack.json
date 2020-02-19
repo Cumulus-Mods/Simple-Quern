@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "minecraft:netherrack"
+  },
+  "tier": 2,
+  "time": 5,
+  "result": {
+    "item": "techreborn:netherrack_dust",
+    "count": 1
+  }
+}

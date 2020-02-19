@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "techreborn:copper_ore"
+  },
+  "tier": 2,
+  "time": 5,
+  "result": {
+    "item": "techreborn:copper_dust",
+    "count": 2
+  }
+}

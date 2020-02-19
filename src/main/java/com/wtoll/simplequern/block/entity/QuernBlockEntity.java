@@ -3,6 +3,7 @@ package com.wtoll.simplequern.block.entity;
 import com.wtoll.simplequern.block.QuernBlock;
 import com.wtoll.simplequern.container.QuernContainer;
 import com.wtoll.simplequern.item.Handstone;
+import com.wtoll.simplequern.recipe.GrindingRecipe;
 import com.wtoll.simplequern.recipe.RecipeType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.container.Container;
@@ -30,6 +31,7 @@ import java.util.Random;
 public class QuernBlockEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeInputProvider {
     private DefaultedList<ItemStack> inventory;
     private int grindTime;
+    private int grindRequired = 1;
     private final PropertyDelegate propertyDelegate;
 
     private static final int[] TOP_SLOTS = new int[]{0};
@@ -44,6 +46,8 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
                 switch(key) {
                     case 0:
                         return QuernBlockEntity.this.grindTime;
+                    case 1:
+                        return QuernBlockEntity.this.grindRequired;
                     default:
                         return 0;
                 }
@@ -54,12 +58,15 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
                     case 0:
                         QuernBlockEntity.this.grindTime = value;
                         break;
+                    case 1:
+                        QuernBlockEntity.this.grindRequired = value;
+                        break;
                 }
 
             }
 
             public int size() {
-                return 1;
+                return 2;
             }
         };
     }
@@ -70,6 +77,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         this.inventory = DefaultedList.ofSize(this.getInvSize(), ItemStack.EMPTY);
         Inventories.fromTag(tag, this.inventory);
         this.grindTime = tag.getShort("GrindTime");
+        this.grindRequired = tag.getShort("GrindRequired");
         markDirty();
     }
 
@@ -79,22 +87,26 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         super.toTag(tag);
         Inventories.toTag(tag, this.inventory);
         tag.putShort("GrindTime", (short) this.grindTime);
+        tag.putShort("GrindRequired", (short) this.grindRequired);
         return tag;
+    }
+
+    public boolean hasItemToGrind() {
+        return !this.inventory.get(0).isEmpty();
     }
 
     public void activate(PlayerEntity player) {
         boolean dirty = false;
         if (!this.getWorld().isClient) {
-            Recipe<?> recipe = this.getWorld().getRecipeManager().getFirstMatch(RecipeType.GRINDING, this, this.world).orElse(null);
+            GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(RecipeType.GRINDING, this, this.world).orElse(null);
             if (this.canAcceptRecipeOutput(recipe)) {
                 this.grindTime++;
-                if (this.grindTime > 5) {
+                if (this.grindTime > recipe.getGrindTime()) {
                     this.inventory.get(1).damage(1, player, (pp) -> {
-                        System.out.println("idk");
                     });
                     this.grindTime = 0;
                     this.craftRecipe(recipe);
-                    world.playSound((double) this.pos.getX(), (double) this.pos.getY(), (double) this.pos.getZ(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f, true);
+                    world.playSound(null, this.pos, SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 1f, 1f);
                     dirty = true;
                 }
             }
@@ -214,9 +226,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         if (stack.getCount() > this.getInvMaxStackAmount()) {
             stack.setCount(this.getInvMaxStackAmount());
         }
-        if (slot == 1) {
-            updateState();
-        }
+        updateState();
         markDirty();
     }
 
@@ -227,6 +237,13 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, false));
             this.grindTime = 0;
         }
+
+        if (inventory.get(0).isEmpty()) {
+            this.grindTime = 0;
+        }
+
+        GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(RecipeType.GRINDING, this, this.world).orElse(null);
+        this.grindRequired = recipe != null ? recipe.getGrindTime() : 1;
     }
 
     @Override

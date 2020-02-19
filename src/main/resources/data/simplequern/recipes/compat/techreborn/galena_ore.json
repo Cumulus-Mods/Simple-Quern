@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "techreborn:galena_ore"
+  },
+  "tier": 2,
+  "time": 5,
+  "result": {
+    "item": "techreborn:galena_dust",
+    "count": 2
+  }
+}

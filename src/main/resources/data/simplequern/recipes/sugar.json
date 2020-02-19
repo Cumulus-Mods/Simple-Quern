@@ -4,6 +4,7 @@
     "item": "minecraft:sugar_cane"
   },
   "tier": 1,
+  "time": 5,
   "result": {
     "item": "minecraft:sugar",
     "count": 4

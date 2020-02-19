@@ -1,0 +1,12 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "minecraft:emerald_ore"
+  },
+  "tier": 3,
+  "time": 5,
+  "result": {
+    "item": "techreborn:emerald_dust",
+    "count": 2
+  }
+}

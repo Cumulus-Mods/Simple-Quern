@@ -4,12 +4,14 @@ import com.wtoll.simplequern.block.entity.QuernBlockEntity;
 import com.wtoll.simplequern.container.Containers;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.tools.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.container.Container;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -28,7 +30,7 @@ public class QuernBlock extends BlockWithEntity {
     //TODO: Maybe add a thing for how rotated the handstone is that way it looks like its going around?
 
     public QuernBlock() {
-        super(FabricBlockSettings.of(Material.STONE).nonOpaque().build());
+        super(FabricBlockSettings.of(Material.STONE).nonOpaque().strength(3.5f, 3.5f).breakByTool(FabricToolTags.PICKAXES).sounds(BlockSoundGroup.STONE).build());
         this.setDefaultState(this.stateManager.getDefaultState().with(HANDSTONE, false));
     }
 
@@ -41,7 +43,7 @@ public class QuernBlock extends BlockWithEntity {
     @SuppressWarnings("deprecation")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            if (hit.getSide() == Direction.UP && state.get(HANDSTONE)) {
+            if (hit.getSide() == Direction.UP && state.get(HANDSTONE) && ((QuernBlockEntity) world.getBlockEntity(pos)).hasItemToGrind()) {
                 ((QuernBlockEntity) world.getBlockEntity(pos)).activate(player);
             } else {
                 openContainer(world, pos, player);
