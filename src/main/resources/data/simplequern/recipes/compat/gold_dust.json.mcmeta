@@ -2,7 +2,7 @@
     "when": [
         {
             "libcd:not": {
-                "libcd:or" [
+                "libcd:or": [
                     {
                         "libcd:mod_loaded": "techreborn"
                     }
