@@ -10,12 +10,15 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.container.Container;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
@@ -27,11 +30,11 @@ import net.minecraft.world.World;
 public class QuernBlock extends BlockWithEntity {
 
     public static final BooleanProperty HANDSTONE;
-    //TODO: Maybe add a thing for how rotated the handstone is that way it looks like its going around?
+    public static final DirectionProperty FACING;
 
     public QuernBlock() {
         super(FabricBlockSettings.of(Material.STONE).nonOpaque().strength(3.5f, 3.5f).breakByTool(FabricToolTags.PICKAXES).sounds(BlockSoundGroup.STONE).build());
-        this.setDefaultState(this.stateManager.getDefaultState().with(HANDSTONE, false));
+        this.setDefaultState(this.stateManager.getDefaultState().with(HANDSTONE, false).with(FACING, Direction.NORTH));
     }
 
     @Override
@@ -98,11 +101,23 @@ public class QuernBlock extends BlockWithEntity {
     }
 
     @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public BlockState rotate(BlockState state, BlockRotation rotation) {
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    }
+
+    @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(HANDSTONE);
+        builder.add(HANDSTONE, FACING);
     }
 
     static {
-        HANDSTONE =  BooleanProperty.of("handstone");
+        HANDSTONE = BooleanProperty.of("handstone");
+        FACING = HorizontalFacingBlock.FACING;
     }
 }

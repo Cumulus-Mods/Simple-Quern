@@ -5,6 +5,7 @@ import com.wtoll.simplequern.container.QuernContainer;
 import com.wtoll.simplequern.item.Handstone;
 import com.wtoll.simplequern.recipe.GrindingRecipe;
 import com.wtoll.simplequern.recipe.RecipeType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.container.Container;
 import net.minecraft.container.PropertyDelegate;
@@ -22,8 +23,11 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -101,6 +105,9 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(RecipeType.GRINDING, this, this.world).orElse(null);
             if (this.canAcceptRecipeOutput(recipe)) {
                 this.grindTime++;
+
+                rotateClockwise(world, world.getBlockState(pos), pos);
+
                 if (this.grindTime > recipe.getGrindTime()) {
                     this.inventory.get(1).damage(1, player, (pp) -> {
                     });
@@ -112,6 +119,12 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             }
         }
         if (dirty) markDirty();
+    }
+
+    private void rotateClockwise(World world, BlockState state, BlockPos pos) {
+        if (!state.rotate(BlockRotation.CLOCKWISE_90).canPlaceAt(world, pos)) return;
+        world.setBlockState(pos, state.rotate(BlockRotation.CLOCKWISE_90));
+        world.updateNeighbor(pos, state.getBlock(), pos);
     }
 
     protected boolean canAcceptRecipeOutput(Recipe<?> recipe) {
