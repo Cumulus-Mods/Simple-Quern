@@ -121,11 +121,8 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         if (dirty) markDirty();
     }
 
-    private void rotateClockwise(World world, BlockState state, BlockPos pos)
-    {
-        if (!state.rotate(BlockRotation.CLOCKWISE_90).canPlaceAt(world, pos))
-            return;
-
+    private void rotateClockwise(World world, BlockState state, BlockPos pos) {
+        if (!state.rotate(BlockRotation.CLOCKWISE_90).canPlaceAt(world, pos)) return;
         world.setBlockState(pos, state.rotate(BlockRotation.CLOCKWISE_90));
         world.updateNeighbor(pos, state.getBlock(), pos);
     }
