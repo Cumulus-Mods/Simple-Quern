@@ -167,6 +167,9 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
 
             if (tool.getDamage() >= tool.getMaxDamage()) {
                 tool.decrement(1);
+                //when handstone breaks, play the tool break sound
+                world.playSound(null, pos, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                updateState();
             }
 
             markDirty();
@@ -244,10 +247,11 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     public void updateState() {
-        if (inventory.get(1).getItem() instanceof Handstone) {
-            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, true));
-        } else {
-            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, false));
+        if(inventory.get(1).getItem() instanceof Handstone) { //set block state to handstone of correct grind level
+            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, ((Handstone) inventory.get(1).getItem()).grindLevel()));
+        }
+        else { //set block state to no handstone
+            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, 0));
             this.grindTime = 0;
         }
 
