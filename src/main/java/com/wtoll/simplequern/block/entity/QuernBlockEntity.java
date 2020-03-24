@@ -9,6 +9,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.container.Container;
 import net.minecraft.container.PropertyDelegate;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -104,7 +106,13 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         if (!this.getWorld().isClient) {
             GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(RecipeType.GRINDING, this, this.world).orElse(null);
             if (this.canAcceptRecipeOutput(recipe)) {
-                this.grindTime++;
+            	/*
+            	Efficiency decreases work time by one per level
+            	So an Efficiency V Handstone would produce 6 grind time per activation
+            	 */
+	            ItemStack tool = inventory.get(1);
+	            int efficiency = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, tool);
+                this.grindTime = grindTime + 1 + efficiency;
 
                 rotateClockwise(world, world.getBlockState(pos), pos);
 
@@ -156,11 +164,45 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             ItemStack outputStack = this.inventory.get(2);
             ItemStack tool = this.inventory.get(1);
 
-            if (outputStack.isEmpty()) {
-                this.inventory.set(2, result.copy());
-            } else if (outputStack.getItem() == result.getItem()) {
-                outputStack.increment(result.getCount());
-            }
+            /*
+            Fortune increases output result
+            Using the same formulas for a pick enchanted with Fortune
+             */
+	        int fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
+	        int count = result.getCount();
+
+	        switch (fortune)
+	        {
+		        case 1: //Fortune I
+		        {
+			        int chance = new Random().nextInt(3); //33% chance to double
+			        count = chance > 1 ? count * 2 : count; //0 & 1 = no change, 2 = multiply by 2
+			        break;
+		        }
+		        case 2: //Fortune II
+		        {
+			        int chance = new Random().nextInt(4); //50% chance for no change, 25% to double, and 25% to triple
+			        count = chance > 1 ? count * chance : count; //0 & 1 = no change, 2 & 3 multiply by value
+			        break;
+		        }
+		        case 3: //Fortune III
+		        {
+		        	int chance = new Random().nextInt(5);  //40% chance for no change, 20% to double, 20% to triple, and 20% to quadruple
+			        count = chance > 1 ? count * chance : count; //0 & 1 = no change, 2, 3, & 4 multiply by value
+			        break;
+		        }
+		        default:
+		        	count = result.getCount();
+	        }
+
+	        if(outputStack.isEmpty()) //set recipe output and set correct count
+	        {
+		        this.inventory.set(2, result.copy());
+		        this.inventory.get(2).setCount(0);
+	        }
+
+	        outputStack = this.inventory.get(2);
+	        outputStack.increment(count);
 
             tool.damage(1, new Random(), null);
             input.decrement(1);
