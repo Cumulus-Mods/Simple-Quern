@@ -2,13 +2,13 @@ package com.wtoll.simplequern.recipe;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.container.CraftingContainer;
-import net.minecraft.container.Slot;
+import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.InputSlotFiller;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeFinder;
+import net.minecraft.screen.slot.Slot;
 
 import java.util.Iterator;
 
@@ -17,7 +17,7 @@ import java.util.Iterator;
 public class QuernInputSlotFiller<C extends Inventory> extends InputSlotFiller<C> {
     private boolean slotMatchesRecipe;
 
-    public QuernInputSlotFiller(CraftingContainer<C> craftingContainer) {
+    public QuernInputSlotFiller(CraftingScreen<C> craftingContainer) {
         super(craftingContainer);
     }
 

@@ -3,13 +3,13 @@ package com.wtoll.simplequern.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.wtoll.simplequern.Utility;
 import com.wtoll.simplequern.container.QuernContainer;
-import net.minecraft.client.gui.screen.ingame.ContainerScreen;
+import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
 //TODO: Finalize
-public class QuernScreen extends ContainerScreen {
+public class QuernScreen extends GenericContainerScreen {
     private static final Identifier RECIPE_BUTTON_TEXTURE = new Identifier("textures/gui/recipe_button.png");
     private boolean narrow;
     private final Identifier background;
