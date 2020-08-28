@@ -1,17 +1,16 @@
 package com.wtoll.simplequern.block;
 
 import com.wtoll.simplequern.block.entity.QuernBlockEntity;
-import com.wtoll.simplequern.container.Containers;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.tools.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.container.Container;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
@@ -56,8 +55,12 @@ public class QuernBlock extends BlockWithEntity {
     }
 
     private void openContainer(World world, BlockPos pos, PlayerEntity player) {
-        ContainerProviderRegistry.INSTANCE.openContainer(Containers.QUERN, player, (buffer) -> buffer.writeBlockPos(pos));
-        player.incrementStat(Stats.INTERACT_WITH_FURNACE);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof QuernBlockEntity)
+        {
+            player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
+            player.incrementStat(Stats.INTERACT_WITH_FURNACE);
+        }
     }
 
     @Override
@@ -72,14 +75,14 @@ public class QuernBlock extends BlockWithEntity {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof QuernBlockEntity) {
                 ItemScatterer.spawn(world, pos, (QuernBlockEntity) blockEntity);
-                world.updateHorizontalAdjacent(pos, this);
+                world.updateNeighbors(pos, this);
             }
-            super.onBlockRemoved(state, world, pos, newState, moved);
+            super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
 
@@ -92,7 +95,7 @@ public class QuernBlock extends BlockWithEntity {
     @Override
     @SuppressWarnings("deprecation")
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        return Container.calculateComparatorOutput(world.getBlockEntity(pos));
+        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }
 
     @Override

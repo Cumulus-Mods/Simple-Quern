@@ -70,8 +70,8 @@ public class GrindingRecipe implements Recipe<Inventory> {
 
     @Override
     public ItemStack craft(Inventory inv) {
-        inv.getInvStack(0).decrement(1);
-        inv.getInvStack(1).damage(1, new Random(), null);
+        inv.getStack(0).decrement(1);
+        inv.getStack(1).damage(1, new Random(), null);
         return getOutput().copy();
     }
 
@@ -88,8 +88,8 @@ public class GrindingRecipe implements Recipe<Inventory> {
 
     @Override
     public boolean matches(Inventory inv, World world) {
-        ItemStack item = inv.getInvStack(0);
-        ItemStack tool = inv.getInvStack(1);
+        ItemStack item = inv.getStack(0);
+        ItemStack tool = inv.getStack(1);
         if (tool.getItem() instanceof Handstone && (((Handstone) tool.getItem()).grindLevel() >= this.grindLevel)) {
             return this.input.test(item);
         }
