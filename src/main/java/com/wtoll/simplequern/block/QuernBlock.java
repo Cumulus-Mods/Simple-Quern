@@ -1,6 +1,8 @@
 package com.wtoll.simplequern.block;
 
 import com.wtoll.simplequern.block.entity.QuernBlockEntity;
+import com.wtoll.simplequern.item.HandstoneEnum;
+import com.wtoll.simplequern.item.HandstoneProperty;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tools.FabricToolTags;
 import net.minecraft.block.*;
@@ -14,7 +16,6 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
@@ -29,12 +30,12 @@ import net.minecraft.world.World;
 
 public class QuernBlock extends BlockWithEntity {
 
-    public static final IntProperty HANDSTONE;
+    public static final HandstoneProperty HANDSTONE;
     public static final DirectionProperty FACING;
 
     public QuernBlock() {
         super(FabricBlockSettings.of(Material.STONE).nonOpaque().strength(3.5f, 3.5f).breakByTool(FabricToolTags.PICKAXES).sounds(BlockSoundGroup.STONE).build());
-        this.setDefaultState(this.stateManager.getDefaultState().with(HANDSTONE, 0).with(FACING, Direction.NORTH));
+        this.setDefaultState(this.stateManager.getDefaultState().with(HANDSTONE, HandstoneEnum.NONE).with(FACING, Direction.NORTH));
     }
 
     @Override
@@ -46,7 +47,7 @@ public class QuernBlock extends BlockWithEntity {
     @SuppressWarnings("deprecation")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            if (hit.getSide() == Direction.UP && state.get(HANDSTONE) > 0 && ((QuernBlockEntity) world.getBlockEntity(pos)).hasItemToGrind()) {
+            if (hit.getSide() == Direction.UP && state.get(HANDSTONE).getId() > 0 && ((QuernBlockEntity) world.getBlockEntity(pos)).hasItemToGrind()) {
                 ((QuernBlockEntity) world.getBlockEntity(pos)).activate(player);
             } else {
                 openContainer(world, pos, player);
@@ -121,7 +122,7 @@ public class QuernBlock extends BlockWithEntity {
     }
 
     static {
-        HANDSTONE = IntProperty.of("handstone", 0, 3);
+        HANDSTONE = HandstoneProperty.of("handstone", HandstoneEnum.values());
         FACING = HorizontalFacingBlock.FACING;
     }
 }

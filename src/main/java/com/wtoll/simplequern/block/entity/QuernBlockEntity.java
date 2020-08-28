@@ -2,6 +2,7 @@ package com.wtoll.simplequern.block.entity;
 
 import com.wtoll.simplequern.block.QuernBlock;
 import com.wtoll.simplequern.item.Handstone;
+import com.wtoll.simplequern.item.HandstoneEnum;
 import com.wtoll.simplequern.recipe.GrindingRecipe;
 import com.wtoll.simplequern.recipe.RecipeType;
 import com.wtoll.simplequern.screen.QuernScreenHandler;
@@ -247,10 +248,10 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
 
     public void updateState() {
         if(inventory.get(1).getItem() instanceof Handstone) { //set block state to handstone of correct grind level
-            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, ((Handstone) inventory.get(1).getItem()).grindLevel()));
+            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, ((Handstone) inventory.get(1).getItem()).property()));
         }
         else { //set block state to no handstone
-            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, 0));
+            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, HandstoneEnum.NONE));
             this.grindTime = 0;
         }
 

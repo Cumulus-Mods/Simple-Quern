@@ -13,9 +13,9 @@ public class Items {
     public static final Item GOLD_DUST;
 
     static {
-        HANDSTONE = register(new ConcreteHandstone(1, 100), "handstone");
-        DIAMOND_HANDSTONE = register(new ConcreteHandstone(2, 100), "diamond_handstone");
-        OBSIDIAN_HANDSTONE = register(new ConcreteHandstone(3, 100), "obsidian_handstone");
+        HANDSTONE = register(new ConcreteHandstone(1, 100, HandstoneEnum.CONCRETE), "handstone");
+        DIAMOND_HANDSTONE = register(new ConcreteHandstone(2, 100, HandstoneEnum.DIAMOND), "diamond_handstone");
+        OBSIDIAN_HANDSTONE = register(new ConcreteHandstone(3, 100, HandstoneEnum.OBSIDIAN), "obsidian_handstone");
         IRON_DUST = register(new Item(new Item.Settings().group(ItemGroup.MATERIALS)), "iron_dust");
         GOLD_DUST = register(new Item(new Item.Settings().group(ItemGroup.MATERIALS)), "gold_dust");
     }

@@ -1,23 +1,23 @@
 {
     "variants": {
-        "handstone=0,facing=north": { "model": "simplequern:block/quern"},
-        "handstone=0,facing=east": { "model": "simplequern:block/quern", "y": 90},
-        "handstone=0,facing=south": { "model": "simplequern:block/quern", "y": 180},
-        "handstone=0,facing=west": { "model": "simplequern:block/quern", "y": 270},
+        "handstone=none,facing=north": { "model": "simplequern:block/quern"},
+        "handstone=none,facing=east": { "model": "simplequern:block/quern", "y": 90},
+        "handstone=none,facing=south": { "model": "simplequern:block/quern", "y": 180},
+        "handstone=none,facing=west": { "model": "simplequern:block/quern", "y": 270},
 
-        "handstone=1,facing=north": { "model": "simplequern:block/quern_handstone"},
-        "handstone=1,facing=east": { "model": "simplequern:block/quern_handstone", "y": 90},
-        "handstone=1,facing=south": { "model": "simplequern:block/quern_handstone", "y": 180},
-        "handstone=1,facing=west": { "model": "simplequern:block/quern_handstone", "y": 270},
+        "handstone=handstone,facing=north": { "model": "simplequern:block/quern_handstone"},
+        "handstone=handstone,facing=east": { "model": "simplequern:block/quern_handstone", "y": 90},
+        "handstone=handstone,facing=south": { "model": "simplequern:block/quern_handstone", "y": 180},
+        "handstone=handstone,facing=west": { "model": "simplequern:block/quern_handstone", "y": 270},
 
-        "handstone=2,facing=north": { "model": "simplequern:block/quern_handstone_diamond"},
-        "handstone=2,facing=east": { "model": "simplequern:block/quern_handstone_diamond", "y": 90},
-        "handstone=2,facing=south": { "model": "simplequern:block/quern_handstone_diamond", "y": 180},
-        "handstone=2,facing=west": { "model": "simplequern:block/quern_handstone_diamond", "y": 270},
+        "handstone=diamond_handstone,facing=north": { "model": "simplequern:block/quern_handstone_diamond"},
+        "handstone=diamond_handstone,facing=east": { "model": "simplequern:block/quern_handstone_diamond", "y": 90},
+        "handstone=diamond_handstone,facing=south": { "model": "simplequern:block/quern_handstone_diamond", "y": 180},
+        "handstone=diamond_handstone,facing=west": { "model": "simplequern:block/quern_handstone_diamond", "y": 270},
 
-        "handstone=3,facing=north": { "model": "simplequern:block/quern_handstone_obsidian"},
-        "handstone=3,facing=east": { "model": "simplequern:block/quern_handstone_obsidian", "y": 90},
-        "handstone=3,facing=south": { "model": "simplequern:block/quern_handstone_obsidian", "y": 180},
-        "handstone=3,facing=west": { "model": "simplequern:block/quern_handstone_obsidian", "y": 270}
+        "handstone=obsidian_handstone,facing=north": { "model": "simplequern:block/quern_handstone_obsidian"},
+        "handstone=obsidian_handstone,facing=east": { "model": "simplequern:block/quern_handstone_obsidian", "y": 90},
+        "handstone=obsidian_handstone,facing=south": { "model": "simplequern:block/quern_handstone_obsidian", "y": 180},
+        "handstone=obsidian_handstone,facing=west": { "model": "simplequern:block/quern_handstone_obsidian", "y": 270}
     }
 }
