@@ -1,14 +1,13 @@
-package com.wtoll.simplequern.container;
+package com.wtoll.simplequern.screen;
 
-import com.wtoll.simplequern.block.entity.QuernBlockEntity;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.slot.Slot;
 
 //TODO: Finalize
-public class QuernOutputSlot extends Slot {
+public class QuernOutputSlot extends Slot
+{
     private final PlayerEntity player;
     private int amount;
 

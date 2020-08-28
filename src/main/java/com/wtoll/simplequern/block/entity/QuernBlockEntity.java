@@ -1,10 +1,10 @@
 package com.wtoll.simplequern.block.entity;
 
 import com.wtoll.simplequern.block.QuernBlock;
-import com.wtoll.simplequern.container.QuernContainer;
 import com.wtoll.simplequern.item.Handstone;
 import com.wtoll.simplequern.recipe.GrindingRecipe;
 import com.wtoll.simplequern.recipe.RecipeType;
+import com.wtoll.simplequern.screen.QuernScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.container.Container;
@@ -20,13 +20,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeFinder;
 import net.minecraft.recipe.RecipeInputProvider;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.BlockRotation;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -78,9 +79,9 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    public void fromTag(CompoundTag tag) {
-        super.fromTag(tag);
-        this.inventory = DefaultedList.ofSize(this.getInvSize(), ItemStack.EMPTY);
+    public void fromTag(BlockState state, CompoundTag tag) {
+        super.fromTag(state, tag);
+        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         Inventories.fromTag(tag, this.inventory);
         this.grindTime = tag.getShort("GrindTime");
         this.grindRequired = tag.getShort("GrindRequired");
@@ -146,7 +147,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
                     return true;
                 } else if (!outputStack.isItemEqualIgnoreDamage(result)) {
                     return false;
-                } else if (outputStack.getCount() < this.getInvMaxStackAmount() && outputStack.getCount() < outputStack.getMaxCount()) {
+                } else if (outputStack.getCount() < this.getMaxCountPerStack() && outputStack.getCount() < outputStack.getMaxCount()) {
                     return true;
                 } else {
                     return outputStack.getCount() < result.getMaxCount();
@@ -164,45 +165,11 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             ItemStack outputStack = this.inventory.get(2);
             ItemStack tool = this.inventory.get(1);
 
-            /*
-            Fortune increases output result
-            Using the same formulas for a pick enchanted with Fortune
-             */
-	        int fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, tool);
-	        int count = result.getCount();
-
-	        switch (fortune)
-	        {
-		        case 1: //Fortune I
-		        {
-			        int chance = new Random().nextInt(3); //33% chance to double
-			        count = chance > 1 ? count * 2 : count; //0 & 1 = no change, 2 = multiply by 2
-			        break;
-		        }
-		        case 2: //Fortune II
-		        {
-			        int chance = new Random().nextInt(4); //50% chance for no change, 25% to double, and 25% to triple
-			        count = chance > 1 ? count * chance : count; //0 & 1 = no change, 2 & 3 multiply by value
-			        break;
-		        }
-		        case 3: //Fortune III
-		        {
-		        	int chance = new Random().nextInt(5);  //40% chance for no change, 20% to double, 20% to triple, and 20% to quadruple
-			        count = chance > 1 ? count * chance : count; //0 & 1 = no change, 2, 3, & 4 multiply by value
-			        break;
-		        }
-		        default:
-		        	count = result.getCount();
-	        }
-
-	        if(outputStack.isEmpty()) //set recipe output and set correct count
-	        {
-		        this.inventory.set(2, result.copy());
-		        this.inventory.get(2).setCount(0);
-	        }
-
-	        outputStack = this.inventory.get(2);
-	        outputStack.increment(count);
+            if (outputStack.isEmpty()) {
+                this.inventory.set(2, result.copy());
+            } else if (outputStack.getItem() == result.getItem()) {
+                outputStack.increment(result.getCount());
+            }
 
             tool.damage(1, new Random(), null);
             input.decrement(1);
@@ -216,7 +183,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    public int[] getInvAvailableSlots(Direction side) {
+    public int[] getAvailableSlots(Direction side) {
         switch (side) {
             case UP:
                 return TOP_SLOTS;
@@ -228,22 +195,22 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
-        return this.isValidInvStack(slot, stack);
+    public boolean canInsert(int slot, ItemStack stack, Direction dir) {
+        return this.isValid(slot, stack);
     }
 
     @Override
-    public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
+    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
         return true;
     }
 
     @Override
-    public int getInvSize() {
+    public int size() {
         return this.inventory.size();
     }
 
     @Override
-    public boolean isInvEmpty() {
+    public boolean isEmpty() {
         Iterator i = this.inventory.iterator();
         ItemStack stack;
         while(i.hasNext()) {
@@ -256,19 +223,19 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    public ItemStack getInvStack(int slot) {
+    public ItemStack getStack(int slot) {
         return this.inventory.get(slot);
     }
 
     @Override
-    public ItemStack takeInvStack(int slot, int amount) {
+    public ItemStack removeStack(int slot, int amount) {
         markDirty();
         updateState();
         return Inventories.splitStack(this.inventory, slot, amount);
     }
 
     @Override
-    public ItemStack removeInvStack(int slot) {
+    public ItemStack removeStack(int slot) {
         markDirty();
         updateState();
         return Inventories.removeStack(this.inventory, slot);
@@ -276,10 +243,10 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
 
     @Override
     // TODO: Revisit this
-    public void setInvStack(int slot, ItemStack stack) {
+    public void setStack(int slot, ItemStack stack) {
         this.inventory.set(slot, stack);
-        if (stack.getCount() > this.getInvMaxStackAmount()) {
-            stack.setCount(this.getInvMaxStackAmount());
+        if (stack.getCount() > this.getMaxCountPerStack()) {
+            stack.setCount(this.getMaxCountPerStack());
         }
         updateState();
         markDirty();
@@ -302,7 +269,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    public boolean canPlayerUseInv(PlayerEntity player) {
+    public boolean canPlayerUse(PlayerEntity player) {
         if (this.world.getBlockEntity(this.pos) != this) {
             return false;
         } else {
@@ -311,7 +278,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    public boolean isValidInvStack(int slot, ItemStack stack) {
+    public boolean isValid(int slot, ItemStack stack) {
         switch (slot) {
             case 0:
                 return true;
@@ -336,8 +303,13 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    protected Container createContainer(int i, PlayerInventory playerInventory) {
-        return new QuernContainer(i, playerInventory, this.pos);
+    protected ScreenHandler createScreenHandler(int i, PlayerInventory playerInventory) {
+        return new QuernScreenHandler(i, playerInventory, this, this.propertyDelegate);
+    }
+
+    @Override
+    public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new QuernScreenHandler(i, playerInventory, this, this.propertyDelegate);
     }
 
     @Override
