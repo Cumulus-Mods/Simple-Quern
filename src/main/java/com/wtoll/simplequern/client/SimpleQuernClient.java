@@ -1,16 +1,14 @@
 package com.wtoll.simplequern.client;
 
-import com.wtoll.simplequern.client.screen.QuernScreen;
-import com.wtoll.simplequern.container.Containers;
+import com.wtoll.simplequern.screen.QuernScreen;
+import com.wtoll.simplequern.screen.ScreenHandlers;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 
-public class SimpleQuernClient implements ClientModInitializer {
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onInitializeClient() {
-        ScreenProviderRegistry.INSTANCE.registerFactory(Containers.QUERN, (syncId, identifier, player, buffer) -> {
-            return new QuernScreen(syncId, player);
-        });
-    }
+public class SimpleQuernClient implements ClientModInitializer
+{
+	@Override
+	public void onInitializeClient() {
+		ScreenRegistry.register(ScreenHandlers.QUERN, QuernScreen::new);
+	}
 }
