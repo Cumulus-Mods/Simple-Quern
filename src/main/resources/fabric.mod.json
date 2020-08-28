@@ -22,7 +22,7 @@
     "com.wtoll.simplequern.SimpleQuern"
     ],
     "client": [
-      "com.wtoll.simplequern.SimpleQuern"
+      "com.wtoll.simplequern.client.SimpleQuernClient"
     ]
   },
   "mixins": [

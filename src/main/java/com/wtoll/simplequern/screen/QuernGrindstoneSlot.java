@@ -8,14 +8,12 @@ public class QuernGrindstoneSlot extends Slot
 {
 	private final QuernScreenHandler handler;
 
-	public QuernGrindstoneSlot(QuernScreenHandler handler, Inventory inventory, int index, int x, int y)
-	{
+	public QuernGrindstoneSlot(QuernScreenHandler handler, Inventory inventory, int index, int x, int y) {
 		super(inventory, index, x, y);
 		this.handler = handler;
 	}
 
-	public boolean canInsert(ItemStack stack)
-	{
+	public boolean canInsert(ItemStack stack) {
 		return this.handler.isGrindStone(stack);
 	}
 }

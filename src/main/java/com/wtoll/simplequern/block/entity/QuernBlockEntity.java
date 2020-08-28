@@ -298,8 +298,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     }
 
     @Override
-    public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity)
-    {
+    public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new QuernScreenHandler(i, playerInventory, this, this.propertyDelegate);
     }
 

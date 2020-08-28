@@ -27,13 +27,11 @@ public class QuernScreenHandler extends AbstractRecipeScreenHandler<Inventory>
 	private final World world;
 	private final RecipeType<? extends GrindingRecipe> recipeType;
 
-	public QuernScreenHandler(int syncId, PlayerInventory playerInventory)
-	{
+	public QuernScreenHandler(int syncId, PlayerInventory playerInventory) {
 		this(syncId, playerInventory, new SimpleInventory(3), new ArrayPropertyDelegate(2));
 	}
 
-	public QuernScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate)
-	{
+	public QuernScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
 		super(ScreenHandlers.QUERN, syncId);
 		this.recipeType = com.wtoll.simplequern.recipe.RecipeType.GRINDING;
 
@@ -63,59 +61,49 @@ public class QuernScreenHandler extends AbstractRecipeScreenHandler<Inventory>
 	}
 
 	@Override
-	public void populateRecipeFinder(RecipeFinder finder)
-	{
-		if (this.inventory instanceof RecipeInputProvider)
-		{
+	public void populateRecipeFinder(RecipeFinder finder) {
+		if (this.inventory instanceof RecipeInputProvider) {
 			((RecipeInputProvider)this.inventory).provideRecipeInputs(finder);
 		}
 	}
 
 	@Override
-	public void clearCraftingSlots()
-	{
+	public void clearCraftingSlots() {
 		this.inventory.clear();
 	}
 
 	@Override
-	public boolean matches(Recipe<? super Inventory> recipe)
-	{
+	public boolean matches(Recipe<? super Inventory> recipe) {
 		return recipe.matches(this.inventory, this.world);
 	}
 
 	@Override
-	public int getCraftingResultSlotIndex()
-	{
+	public int getCraftingResultSlotIndex() {
 		return 2;
 	}
 
 	@Override
-	public int getCraftingWidth()
-	{
+	public int getCraftingWidth() {
 		return 1;
 	}
 
 	@Override
-	public int getCraftingHeight()
-	{
+	public int getCraftingHeight() {
 		return 1;
 	}
 
 	@Override
-	public int getCraftingSlotCount()
-	{
+	public int getCraftingSlotCount() {
 		return 3;
 	}
 
 	@Override
-	public RecipeBookCategory getCategory()
-	{
+	public RecipeBookCategory getCategory() {
 		return null;
 	}
 
 	@Override
-	public boolean canUse(PlayerEntity player)
-	{
+	public boolean canUse(PlayerEntity player) {
 		return this.inventory.canPlayerUse(player);
 	}
 
@@ -167,33 +155,27 @@ public class QuernScreenHandler extends AbstractRecipeScreenHandler<Inventory>
 		return itemStack;
 	}
 
-	public boolean isGrindable(ItemStack itemStack)
-	{
+	public boolean isGrindable(ItemStack itemStack) {
 		return this.world.getRecipeManager().getFirstMatch(this.recipeType, new SimpleInventory(itemStack), this.world).isPresent();
 	}
 
-	public boolean isGrindStone(ItemStack itemStack)
-	{
+	public boolean isGrindStone(ItemStack itemStack) {
 		return itemStack.getItem() instanceof Handstone;
 	}
 
-	public int getGrindProgress()
-	{
+	public int getGrindProgress() {
 		return this.propertyDelegate.get(0);
 	}
 
-	public int getGrindRequired()
-	{
+	public int getGrindRequired() {
 		return this.propertyDelegate.get(1);
 	}
 
-	public float getGrindProportion()
-	{
+	public float getGrindProportion() {
 		return (float) getGrindProgress() / (float) getGrindRequired();
 	}
 
-	public void fillInputSlots(boolean bl, Recipe<?> recipe, ServerPlayerEntity serverPlayerEntity)
-	{
+	public void fillInputSlots(boolean bl, Recipe<?> recipe, ServerPlayerEntity serverPlayerEntity) {
 		(new QuernInputSlotFiller(this)).fillInputSlots(serverPlayerEntity, recipe, bl);
 	}
 }
