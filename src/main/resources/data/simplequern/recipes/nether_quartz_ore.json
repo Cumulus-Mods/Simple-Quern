@@ -1,0 +1,13 @@
+{
+  "type": "simplequern:grinding",
+  "ingredient": {
+    "item": "minecraft:nether_quartz_ore"
+  },
+  "tier": 2,
+  "time": 5,
+  "result": {
+    "item": "minecraft:quartz",
+    "count": 1
+  },
+  "loot_table": "minecraft:blocks/nether_quartz_ore"
+}

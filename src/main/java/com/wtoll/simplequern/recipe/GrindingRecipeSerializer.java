@@ -26,7 +26,11 @@ public class GrindingRecipeSerializer implements RecipeSerializer<GrindingRecipe
         int grindLevel = JsonHelper.getInt(jsonObject, "tier");
         int grindTime = JsonHelper.getInt(jsonObject, "time");
         ItemStack output = ShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result"));
-        return this.recipeFactory.create(identifier, group, input, grindLevel, grindTime, output);
+
+        String lootTableString = JsonHelper.getString(jsonObject, "loot_table", "");
+        Identifier lootTableId = lootTableString.equals("") ? null : new Identifier(lootTableString);
+
+        return this.recipeFactory.create(identifier, group, input, grindLevel, grindTime, output, lootTableId);
     }
 
     @Override
@@ -36,7 +40,8 @@ public class GrindingRecipeSerializer implements RecipeSerializer<GrindingRecipe
         int grindLevel =  packetByteBuf.readInt();
         int grindTime = packetByteBuf.readInt();
         ItemStack output = packetByteBuf.readItemStack();
-        return this.recipeFactory.create(identifier, group, input, grindLevel, grindTime, output);
+        Identifier lootTableId = packetByteBuf.readBoolean() ? packetByteBuf.readIdentifier() : null;
+        return this.recipeFactory.create(identifier, group, input, grindLevel, grindTime, output, lootTableId);
     }
 
     @Override
@@ -46,9 +51,17 @@ public class GrindingRecipeSerializer implements RecipeSerializer<GrindingRecipe
         packetByteBuf.writeInt(grindingRecipe.getGrindLevel());
         packetByteBuf.writeInt(grindingRecipe.getGrindTime());
         packetByteBuf.writeItemStack(grindingRecipe.getOutput());
+
+        if(grindingRecipe.getLootTableId() == null)
+            packetByteBuf.writeBoolean(false);
+        else {
+            packetByteBuf.writeBoolean(true);
+            packetByteBuf.writeIdentifier(grindingRecipe.getLootTableId());
+        }
+
     }
 
     interface RecipeFactory {
-        GrindingRecipe create(Identifier id, String group, Ingredient input, int grindLevel, int grindTime, ItemStack output);
+        GrindingRecipe create(Identifier id, String group, Ingredient input, int grindLevel, int grindTime, ItemStack output, Identifier lootTableId);
     }
 }

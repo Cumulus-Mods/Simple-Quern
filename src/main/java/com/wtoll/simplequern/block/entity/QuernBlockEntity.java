@@ -7,8 +7,6 @@ import com.wtoll.simplequern.recipe.RecipeType;
 import com.wtoll.simplequern.screen.QuernScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.container.Container;
-import net.minecraft.container.PropertyDelegate;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -158,12 +156,12 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         }
     }
 
-    private void craftRecipe(Recipe<?> recipe) {
+    private void craftRecipe(GrindingRecipe recipe) {
         if (recipe != null && this.canAcceptRecipeOutput(recipe)) {
             ItemStack input = this.inventory.get(0);
-            ItemStack result = recipe.getOutput();
             ItemStack outputStack = this.inventory.get(2);
             ItemStack tool = this.inventory.get(1);
+            ItemStack result = recipe.craftRecipeOutputWithTool(tool, this.world);
 
             if (outputStack.isEmpty()) {
                 this.inventory.set(2, result.copy());
