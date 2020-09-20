@@ -1,4 +1,4 @@
-package com.wtoll.simplequern.recipe;
+package com.cumulus.simplequern.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,6 +18,7 @@ public class GrindingRecipeSerializer implements RecipeSerializer<GrindingRecipe
         this.recipeFactory = recipeFactory;
     }
 
+    // TODO: Make this a codec!
     @Override
     public GrindingRecipe read(Identifier identifier, JsonObject jsonObject) {
         String group = JsonHelper.getString(jsonObject, "group", "");

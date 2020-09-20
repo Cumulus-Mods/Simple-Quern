@@ -1,4 +1,4 @@
-package com.wtoll.simplequern.item;
+package com.cumulus.simplequern.item;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;

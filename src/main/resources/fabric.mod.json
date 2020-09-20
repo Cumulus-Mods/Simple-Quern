@@ -2,27 +2,24 @@
   "schemaVersion": 1,
   "id": "simplequern",
   "version": "${version}",
-
   "name": "Simple Quern",
   "description": "Adds the quern, a block allowing for simple ore-doubling",
   "authors": [
-    "Wtoll"
+    "Vaerian"
   ],
   "contact": {
-    "homepage": "https://github.com/Wtoll/simplequern",
-    "sources": "https://github.com/Wtoll/simplequern"
+    "homepage": "https://github.com/Cumulus-Mods/Simple-Quern",
+    "sources": "https://github.com/Cumulus-Modss/Simple-Quern"
   },
-
   "license": "MIT",
   "icon": "assets/simplequern/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
-    "com.wtoll.simplequern.SimpleQuern"
+    "com.cumulus.simplequern.SimpleQuern"
     ],
     "client": [
-      "com.wtoll.simplequern.client.SimpleQuernClient"
+      "com.cumulus.simplequern.client.SimpleQuernClient"
     ]
   },
   "mixins": [
@@ -33,8 +30,5 @@
     "fabricloader": ">=0.7.2",
     "fabric": "*",
     "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "flamingo": "*"
   }
 }

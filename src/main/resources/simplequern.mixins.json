@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.wtoll.simplequern.mixin",
+  "package": "com.cumulus.simplequern.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],

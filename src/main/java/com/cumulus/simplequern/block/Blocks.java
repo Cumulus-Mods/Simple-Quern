@@ -1,6 +1,6 @@
-package com.wtoll.simplequern.block;
+package com.cumulus.simplequern.block;
 
-import com.wtoll.simplequern.Utility;
+import com.cumulus.simplequern.SimpleQuern;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -12,7 +12,7 @@ public class Blocks {
     public static final Block QUERN;
 
     static {
-        QUERN = register(new QuernBlock(), Utility.id("quern"), new Item.Settings().group(ItemGroup.DECORATIONS));
+        QUERN = register(new QuernBlock(), SimpleQuern.id("quern"), new Item.Settings().group(ItemGroup.DECORATIONS));
     }
 
     public static Block register(Block b, Identifier id, Item.Settings settings) {
