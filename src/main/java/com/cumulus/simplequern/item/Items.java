@@ -1,6 +1,6 @@
-package com.wtoll.simplequern.item;
+package com.cumulus.simplequern.item;
 
-import com.wtoll.simplequern.Utility;
+import com.cumulus.simplequern.SimpleQuern;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.registry.Registry;
@@ -21,7 +21,7 @@ public class Items {
     }
 
     public static Item register(Item i, String s) {
-        return Registry.register(Registry.ITEM, Utility.id(s), i);
+        return Registry.register(Registry.ITEM, SimpleQuern.id(s), i);
     }
 
     public static void initialize() {  }

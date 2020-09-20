@@ -1,11 +1,10 @@
-package com.wtoll.simplequern.screen;
+package com.cumulus.simplequern.screen;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 
-public class QuernGrindstoneSlot extends Slot
-{
+public class QuernGrindstoneSlot extends Slot {
 	private final QuernScreenHandler handler;
 
 	public QuernGrindstoneSlot(QuernScreenHandler handler, Inventory inventory, int index, int x, int y) {

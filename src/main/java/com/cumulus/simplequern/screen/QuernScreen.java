@@ -1,16 +1,15 @@
-package com.wtoll.simplequern.screen;
+package com.cumulus.simplequern.screen;
 
+import com.cumulus.simplequern.SimpleQuern;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.wtoll.simplequern.Utility;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-public class QuernScreen extends HandledScreen<QuernScreenHandler>
-{
-	private static final Identifier BACKGROUND = Utility.id("textures/gui/container/quern.png");
+public class QuernScreen extends HandledScreen<QuernScreenHandler> {
+	private static final Identifier BACKGROUND = SimpleQuern.id("textures/gui/container/quern.png");
 
 	public QuernScreen(QuernScreenHandler handler, PlayerInventory inventory, Text title) {
 		super(handler, inventory, title);

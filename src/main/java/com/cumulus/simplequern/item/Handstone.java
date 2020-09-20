@@ -1,4 +1,4 @@
-package com.wtoll.simplequern.item;
+package com.cumulus.simplequern.item;
 
 public interface Handstone {
     public default int grindLevel() {

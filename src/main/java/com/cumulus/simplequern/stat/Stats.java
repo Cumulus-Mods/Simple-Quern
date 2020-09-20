@@ -1,6 +1,6 @@
-package com.wtoll.simplequern.stat;
+package com.cumulus.simplequern.stat;
 
-import com.wtoll.simplequern.Utility;
+import com.cumulus.simplequern.SimpleQuern;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -13,7 +13,7 @@ public class Stats {
     }
 
     private static Identifier register(String string, StatFormatter statFormatter) {
-        Identifier identifier = Utility.id(string);
+        Identifier identifier = SimpleQuern.id(string);
         Registry.register(Registry.CUSTOM_STAT, string, identifier);
         net.minecraft.stat.Stats.CUSTOM.getOrCreateStat(identifier, statFormatter);
         return identifier;

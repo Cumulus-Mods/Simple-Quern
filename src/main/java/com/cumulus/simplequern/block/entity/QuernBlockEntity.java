@@ -1,10 +1,10 @@
-package com.wtoll.simplequern.block.entity;
+package com.cumulus.simplequern.block.entity;
 
-import com.wtoll.simplequern.block.QuernBlock;
-import com.wtoll.simplequern.item.Handstone;
-import com.wtoll.simplequern.recipe.GrindingRecipe;
-import com.wtoll.simplequern.recipe.RecipeType;
-import com.wtoll.simplequern.screen.QuernScreenHandler;
+import com.cumulus.simplequern.block.QuernBlock;
+import com.cumulus.simplequern.item.Handstone;
+import com.cumulus.simplequern.recipe.GrindingRecipe;
+import com.cumulus.simplequern.recipe.RecipeType;
+import com.cumulus.simplequern.screen.QuernScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;

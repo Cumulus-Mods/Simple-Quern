@@ -1,6 +1,6 @@
-package com.wtoll.simplequern.block;
+package com.cumulus.simplequern.block;
 
-import com.wtoll.simplequern.block.entity.QuernBlockEntity;
+import com.cumulus.simplequern.block.entity.QuernBlockEntity;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tools.FabricToolTags;
 import net.minecraft.block.*;

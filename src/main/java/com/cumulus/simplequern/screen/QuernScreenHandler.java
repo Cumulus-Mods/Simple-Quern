@@ -1,8 +1,8 @@
-package com.wtoll.simplequern.screen;
+package com.cumulus.simplequern.screen;
 
-import com.wtoll.simplequern.item.Handstone;
-import com.wtoll.simplequern.recipe.GrindingRecipe;
-import com.wtoll.simplequern.recipe.QuernInputSlotFiller;
+import com.cumulus.simplequern.item.Handstone;
+import com.cumulus.simplequern.recipe.GrindingRecipe;
+import com.cumulus.simplequern.recipe.QuernInputSlotFiller;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -20,8 +20,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 
-public class QuernScreenHandler extends AbstractRecipeScreenHandler<Inventory>
-{
+public class QuernScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
 	private final Inventory inventory;
 	private final PropertyDelegate propertyDelegate;
 	private final World world;
@@ -33,7 +32,7 @@ public class QuernScreenHandler extends AbstractRecipeScreenHandler<Inventory>
 
 	public QuernScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
 		super(ScreenHandlers.QUERN, syncId);
-		this.recipeType = com.wtoll.simplequern.recipe.RecipeType.GRINDING;
+		this.recipeType = com.cumulus.simplequern.recipe.RecipeType.GRINDING;
 
 		checkSize(inventory, 3);
 		checkDataCount(propertyDelegate, 2);

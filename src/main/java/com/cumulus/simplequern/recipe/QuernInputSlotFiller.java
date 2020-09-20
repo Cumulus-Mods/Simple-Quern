@@ -1,4 +1,4 @@
-package com.wtoll.simplequern.recipe;
+package com.cumulus.simplequern.recipe;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -13,7 +13,7 @@ import net.minecraft.screen.slot.Slot;
 import java.util.Iterator;
 
 
-//TODO: Finalize
+// TODO: Finalize
 public class QuernInputSlotFiller<C extends Inventory> extends InputSlotFiller<C> {
     private boolean slotMatchesRecipe;
 

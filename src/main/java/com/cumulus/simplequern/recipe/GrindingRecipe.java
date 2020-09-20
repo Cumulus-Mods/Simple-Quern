@@ -1,7 +1,7 @@
-package com.wtoll.simplequern.recipe;
+package com.cumulus.simplequern.recipe;
 
-import com.wtoll.simplequern.block.Blocks;
-import com.wtoll.simplequern.item.Handstone;
+import com.cumulus.simplequern.block.Blocks;
+import com.cumulus.simplequern.item.Handstone;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;

@@ -1,4 +1,4 @@
-package com.wtoll.simplequern.screen;
+package com.cumulus.simplequern.screen;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -6,8 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 
 //TODO: Finalize
-public class QuernOutputSlot extends Slot
-{
+public class QuernOutputSlot extends Slot {
     private final PlayerEntity player;
     private int amount;
 
