@@ -1,5 +1,6 @@
 package com.cumulus.simplequern.screen;
 
+import com.cumulus.simplequern.init.SimpleQuernRecipeTypes;
 import com.cumulus.simplequern.item.Handstone;
 import com.cumulus.simplequern.recipe.GrindingRecipe;
 import com.cumulus.simplequern.recipe.QuernInputSlotFiller;
@@ -32,7 +33,7 @@ public class QuernScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
 
 	public QuernScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
 		super(ScreenHandlers.QUERN, syncId);
-		this.recipeType = com.cumulus.simplequern.recipe.RecipeType.GRINDING;
+		this.recipeType = SimpleQuernRecipeTypes.GRINDING;
 
 		checkSize(inventory, 3);
 		checkDataCount(propertyDelegate, 2);

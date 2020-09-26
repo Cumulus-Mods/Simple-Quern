@@ -1,11 +1,11 @@
 package com.cumulus.simplequern;
 
-import com.cumulus.simplequern.block.Blocks;
-import com.cumulus.simplequern.block.entity.BlockEntityType;
-import com.cumulus.simplequern.item.Items;
-import com.cumulus.simplequern.stat.Stats;
-import com.cumulus.simplequern.recipe.RecipeSerializer;
-import com.cumulus.simplequern.recipe.RecipeType;
+import com.cumulus.simplequern.init.SimpleQuernBlocks;
+import com.cumulus.simplequern.init.SimpleQuernBlockEntityTypes;
+import com.cumulus.simplequern.init.SimpleQuernItems;
+import com.cumulus.simplequern.init.SimpleQuernStats;
+import com.cumulus.simplequern.init.SimpleQuernRecipeSerializers;
+import com.cumulus.simplequern.init.SimpleQuernRecipeTypes;
 import com.cumulus.simplequern.screen.ScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
@@ -17,13 +17,13 @@ public class SimpleQuern implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        Stats.initialize();
-        RecipeSerializer.initialize();
-        RecipeType.initialize();
+        SimpleQuernStats.onInitialize();
+        SimpleQuernRecipeSerializers.initialize();
+        SimpleQuernRecipeTypes.onInitialize();
         ScreenHandlers.initialize();
-        Items.initialize();
-        BlockEntityType.initialize();
-        Blocks.initialize();
+        SimpleQuernItems.onInitialize();
+        SimpleQuernBlockEntityTypes.onInitialize();
+        SimpleQuernBlocks.onInitialize();
     }
 
     public static Identifier id(String s) {

@@ -1,7 +1,7 @@
 package com.cumulus.simplequern.item;
 
 public interface Handstone {
-    public default int grindLevel() {
+    default int grindTier() {
         return 0;
     }
 }

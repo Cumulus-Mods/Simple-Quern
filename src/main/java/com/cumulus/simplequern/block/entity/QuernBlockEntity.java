@@ -1,9 +1,10 @@
 package com.cumulus.simplequern.block.entity;
 
 import com.cumulus.simplequern.block.QuernBlock;
+import com.cumulus.simplequern.init.SimpleQuernBlockEntityTypes;
 import com.cumulus.simplequern.item.Handstone;
 import com.cumulus.simplequern.recipe.GrindingRecipe;
-import com.cumulus.simplequern.recipe.RecipeType;
+import com.cumulus.simplequern.init.SimpleQuernRecipeTypes;
 import com.cumulus.simplequern.screen.QuernScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -18,6 +19,7 @@ import net.minecraft.recipe.RecipeFinder;
 import net.minecraft.recipe.RecipeInputProvider;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -42,7 +44,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     private static final int[] SIDE_SLOTS = new int[]{1};
 
     public QuernBlockEntity() {
-        super(BlockEntityType.QUERN);
+        super(SimpleQuernBlockEntityTypes.QUERN);
         this.inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
         this.propertyDelegate = new PropertyDelegate() {
             public int get(int key) {
@@ -101,7 +103,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     public void activate(PlayerEntity player) {
         boolean dirty = false;
         if (!this.getWorld().isClient) {
-            GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(RecipeType.GRINDING, this, this.world).orElse(null);
+            GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(SimpleQuernRecipeTypes.GRINDING, this, this.world).orElse(null);
             if (this.canAcceptRecipeOutput(recipe)) {
                 this.grindTime++;
 
@@ -126,9 +128,11 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         world.updateNeighbor(pos, state.getBlock(), pos);
     }
 
-    protected boolean canAcceptRecipeOutput(Recipe<?> recipe) {
-        if (!(this.inventory.get(0)).isEmpty() && recipe != null) {
-            ItemStack result = recipe.getOutput();
+    protected boolean canAcceptRecipeOutput(GrindingRecipe recipe) {
+        ItemStack toolStack = this.inventory.get(1);
+        ItemStack inputStack = this.inventory.get(0);
+        if (!inputStack.isEmpty() && recipe != null) {
+            ItemStack result = recipe.getOutput(toolStack, (ServerWorld) this.world).get(0);
             if (result.isEmpty()) {
                 return false;
             } else {
@@ -148,12 +152,13 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         }
     }
 
-    private void craftRecipe(Recipe<?> recipe) {
+    private void craftRecipe(GrindingRecipe recipe) {
         if (recipe != null && this.canAcceptRecipeOutput(recipe)) {
             ItemStack input = this.inventory.get(0);
-            ItemStack result = recipe.getOutput();
             ItemStack outputStack = this.inventory.get(2);
             ItemStack tool = this.inventory.get(1);
+
+            ItemStack result = recipe.getOutput(tool, (ServerWorld) this.world).get(0);
 
             if (outputStack.isEmpty()) {
                 this.inventory.set(2, result.copy());
@@ -254,7 +259,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             this.grindTime = 0;
         }
 
-        GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(RecipeType.GRINDING, this, this.world).orElse(null);
+        GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(SimpleQuernRecipeTypes.GRINDING, this, this.world).orElse(null);
         this.grindRequired = recipe != null ? recipe.getGrindTime() : 1;
     }
 
