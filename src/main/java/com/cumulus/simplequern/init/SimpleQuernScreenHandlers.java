@@ -1,13 +1,14 @@
-package com.cumulus.simplequern.screen;
+package com.cumulus.simplequern.init;
 
 import com.cumulus.simplequern.SimpleQuern;
+import com.cumulus.simplequern.screen.QuernScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.screen.ScreenHandlerType;
 
-public class ScreenHandlers {
+public class SimpleQuernScreenHandlers {
 	public static ScreenHandlerType<QuernScreenHandler> QUERN;
 
-	public static void initialize() {
+	public static void onInitialize() {
 		QUERN = ScreenHandlerRegistry.registerSimple(SimpleQuern.id("quern"), QuernScreenHandler::new);
 	}
 }

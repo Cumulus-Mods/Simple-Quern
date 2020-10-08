@@ -1,4 +1,4 @@
-package com.cumulus.simplequern.screen;
+package com.cumulus.simplequern.client.screen.slot;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

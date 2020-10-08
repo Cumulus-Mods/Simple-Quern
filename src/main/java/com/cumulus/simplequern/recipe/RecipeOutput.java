@@ -2,20 +2,9 @@ package com.cumulus.simplequern.recipe;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.data.server.LootTablesProvider;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootTableReporter;
-import net.minecraft.loot.LootTables;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-
-import java.util.Map;
-import java.util.Optional;
 
 public class RecipeOutput {
 

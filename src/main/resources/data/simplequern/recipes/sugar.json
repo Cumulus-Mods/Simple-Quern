@@ -1,0 +1,14 @@
+{
+  "type": "simplequern:grinding",
+  "input": {
+    "type": "item",
+    "id": "minecraft:sugar_cane"
+  },
+  "tier": 1,
+  "time": 5,
+  "output": {
+    "type": "item",
+    "id": "minecraft:sugar",
+    "count": 4
+  }
+}

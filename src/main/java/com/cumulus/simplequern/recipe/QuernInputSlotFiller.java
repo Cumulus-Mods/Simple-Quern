@@ -23,7 +23,7 @@ public class QuernInputSlotFiller<C extends Inventory> extends InputSlotFiller<C
 
     protected void fillInputSlots(Recipe<C> recipe, boolean craftAll) {
         this.slotMatchesRecipe = this.craftingScreenHandler.matches(recipe);
-        int i = this.recipeFinder.countRecipeCrafts(recipe, (IntList)null);
+        int i = this.recipeFinder.countRecipeCrafts(recipe, null);
         if (this.slotMatchesRecipe) {
             ItemStack itemStack = this.craftingScreenHandler.getSlot(0).getStack();
             if (itemStack.isEmpty() || i <= itemStack.getCount()) {

@@ -1,5 +1,6 @@
 package com.cumulus.simplequern.item;
 
+import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 

@@ -1,5 +1,6 @@
-package com.cumulus.simplequern.screen;
+package com.cumulus.simplequern.client.screen.slot;
 
+import com.cumulus.simplequern.screen.QuernScreenHandler;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;

@@ -1,6 +1,7 @@
-package com.cumulus.simplequern.screen;
+package com.cumulus.simplequern.client.screen;
 
 import com.cumulus.simplequern.SimpleQuern;
+import com.cumulus.simplequern.screen.QuernScreenHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;

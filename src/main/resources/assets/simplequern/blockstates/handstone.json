@@ -1,7 +1,7 @@
 {
     "variants": {
         "": {
-            "model": "simplequern:block/quern"
+            "model": "simplequern:block/handstone"
         }
     }
 }

@@ -34,6 +34,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class GrindingRecipe implements Recipe<Inventory> {
+
+    private static final GrindingRecipe EMPTY = new GrindingRecipe(new Identifier(""), 0, 0, new RecipeOutput("item", new Identifier(""), 0), new RecipeInput(new Identifier(""), "item"));
+
     private final RecipeInput input;
     private final RecipeOutput output;
     private final int grindTier;
@@ -157,7 +160,7 @@ public class GrindingRecipe implements Recipe<Inventory> {
             if (!result.error().isPresent()) {
                 return result.result().get();
             }
-            return null;
+            return EMPTY;
         }
 
         @Override
@@ -170,7 +173,7 @@ public class GrindingRecipe implements Recipe<Inventory> {
                     return result.result().get();
                 }
             }
-            return null;
+            return EMPTY;
         }
 
         @Override

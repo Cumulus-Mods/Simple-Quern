@@ -1,0 +1,14 @@
+{
+  "type": "simplequern:grinding",
+  "input": {
+    "type": "item",
+    "id": "minecraft:iron_ore"
+  },
+  "tier": 2,
+  "time": 5,
+  "output": {
+    "type": "item",
+    "id": "simplequern:iron_dust",
+    "count": 2
+  }
+}

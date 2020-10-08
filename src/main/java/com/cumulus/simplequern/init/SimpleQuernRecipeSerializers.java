@@ -14,5 +14,5 @@ public class SimpleQuernRecipeSerializers {
         return Registry.register(Registry.RECIPE_SERIALIZER, id, serializer);
     }
 
-    public static void initialize() {  }
+    public static void onInitialize() {  }
 }

@@ -1,0 +1,14 @@
+{
+  "type": "simplequern:grinding",
+  "input": {
+    "type": "item",
+    "id": "minecraft:bone"
+  },
+  "tier": 1,
+  "time": 5,
+  "output": {
+    "type": "item",
+    "id": "minecraft:bone_meal",
+    "count": 6
+  }
+}

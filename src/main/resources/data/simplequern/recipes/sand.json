@@ -1,0 +1,14 @@
+{
+  "type": "simplequern:grinding",
+  "input": {
+    "type": "item",
+    "id": "minecraft:gravel"
+  },
+  "tier": 1,
+  "time": 5,
+  "output": {
+    "type": "item",
+    "id": "minecraft:sand",
+    "count": 1
+  }
+}

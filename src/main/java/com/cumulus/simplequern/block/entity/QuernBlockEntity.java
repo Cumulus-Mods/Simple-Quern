@@ -1,20 +1,20 @@
 package com.cumulus.simplequern.block.entity;
 
-import com.cumulus.simplequern.block.QuernBlock;
 import com.cumulus.simplequern.init.SimpleQuernBlockEntityTypes;
 import com.cumulus.simplequern.item.Handstone;
 import com.cumulus.simplequern.recipe.GrindingRecipe;
 import com.cumulus.simplequern.init.SimpleQuernRecipeTypes;
 import com.cumulus.simplequern.screen.QuernScreenHandler;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeFinder;
 import net.minecraft.recipe.RecipeInputProvider;
 import net.minecraft.screen.PropertyDelegate;
@@ -24,20 +24,24 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.Iterator;
 import java.util.Random;
 
-public class QuernBlockEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeInputProvider {
+public class QuernBlockEntity extends LockableContainerBlockEntity implements Tickable, SidedInventory, RecipeInputProvider, BlockEntityClientSerializable {
     private DefaultedList<ItemStack> inventory;
-    private int grindTime;
-    private int grindRequired = 1;
+    private int currentGrindTime;
+    private int completeGrindTime = 1;
     private final PropertyDelegate propertyDelegate;
+
+    private AnimationStage animationStage;
+
+    private float animationProgress;
+    private float prevAnimationProgress;
 
     private static final int[] TOP_SLOTS = new int[]{0};
     private static final int[] BOTTOM_SLOTS = new int[]{2};
@@ -45,14 +49,17 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
 
     public QuernBlockEntity() {
         super(SimpleQuernBlockEntityTypes.QUERN);
+        if (this.animationStage == null) {
+            this.animationStage = AnimationStage.NORTH;
+        }
         this.inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
         this.propertyDelegate = new PropertyDelegate() {
             public int get(int key) {
                 switch(key) {
                     case 0:
-                        return QuernBlockEntity.this.grindTime;
+                        return QuernBlockEntity.this.currentGrindTime;
                     case 1:
-                        return QuernBlockEntity.this.grindRequired;
+                        return QuernBlockEntity.this.completeGrindTime;
                     default:
                         return 0;
                 }
@@ -61,10 +68,10 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             public void set(int key, int value) {
                 switch(key) {
                     case 0:
-                        QuernBlockEntity.this.grindTime = value;
+                        QuernBlockEntity.this.currentGrindTime = value;
                         break;
                     case 1:
-                        QuernBlockEntity.this.grindRequired = value;
+                        QuernBlockEntity.this.completeGrindTime = value;
                         break;
                 }
 
@@ -76,56 +83,172 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         };
     }
 
+    public void tick() {
+        this.updateAnimation();
+    }
+
+    protected void updateAnimation() {
+        this.prevAnimationProgress = this.animationProgress;
+        switch(this.animationStage) {
+            case TO_NORTH:
+                this.animationProgress += 0.1F;
+                if (this.animationProgress >= 4.0F) {
+                    this.animationStage = AnimationStage.NORTH;
+                    this.prevAnimationProgress -= 4.0F;
+                    this.animationProgress = 0.0F;
+                }
+                break;
+            case NORTH:
+                this.animationProgress = 0.0F;
+                break;
+            case TO_EAST:
+                this.animationProgress += 0.1F;
+                if (this.animationProgress >= 1.0F) {
+                    this.animationStage = AnimationStage.EAST;
+                    this.animationProgress = 1.0F;
+                }
+                break;
+            case EAST:
+                this.animationProgress = 1.0F;
+                break;
+            case TO_SOUTH:
+                this.animationProgress += 0.1F;
+                if (this.animationProgress >= 2.0F) {
+                    this.animationStage = AnimationStage.SOUTH;
+                    this.animationProgress = 2.0F;
+                }
+                break;
+            case SOUTH:
+                this.animationProgress = 2.0F;
+                break;
+            case TO_WEST:
+                this.animationProgress += 0.1F;
+                if (this.animationProgress >= 3.0F) {
+                    this.animationStage = AnimationStage.WEST;
+                    this.animationProgress = 3.0F;
+                }
+                break;
+            case WEST:
+                this.animationProgress = 3.0F;
+                break;
+        }
+
+    }
+
+    public AnimationStage getAnimationStage() {
+        return this.animationStage;
+    }
+
+    public ItemStack getOutputStack() {
+        return this.getStack(2);
+    }
+
+    public ItemStack getInputStack() {
+        return this.getStack(0);
+    }
+
+    public ItemStack getToolStack() {
+        return this.getStack(1);
+    }
+
+    public boolean hasHandstone() {
+        return this.getToolStack().getItem() instanceof Handstone;
+    }
+
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         Inventories.fromTag(tag, this.inventory);
-        this.grindTime = tag.getShort("GrindTime");
-        this.grindRequired = tag.getShort("GrindRequired");
+        this.currentGrindTime = tag.getShort("GrindTime");
+        this.completeGrindTime = tag.getShort("GrindRequired");
+        this.animationStage = AnimationStage.fromString(tag.getString("AnimationStage"));
         markDirty();
     }
 
     @Override
-    // TODO: Revisit this method
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
         Inventories.toTag(tag, this.inventory);
-        tag.putShort("GrindTime", (short) this.grindTime);
-        tag.putShort("GrindRequired", (short) this.grindRequired);
+        tag.putShort("GrindTime", (short) this.currentGrindTime);
+        tag.putShort("GrindRequired", (short) this.completeGrindTime);
+        tag.putString("AnimationStage", this.animationStage.toString());
         return tag;
     }
 
     public boolean hasItemToGrind() {
-        return !this.inventory.get(0).isEmpty();
+        return !this.getInputStack().isEmpty();
+    }
+
+    public float getAnimationProgress(float f) {
+        return MathHelper.lerp(f, this.prevAnimationProgress, this.animationProgress);
+    }
+
+    public boolean onSyncedBlockEvent(int type, int data) {
+        if (type == 1) {
+            if (data == 0) {
+                this.animationStage = AnimationStage.TO_EAST;
+            }
+
+            if (data == 1) {
+                this.animationStage = AnimationStage.TO_SOUTH;
+            }
+
+            if (data == 2) {
+                this.animationStage = AnimationStage.TO_WEST;
+            }
+
+            if (data == 3) {
+                this.animationStage = AnimationStage.TO_NORTH;
+            }
+
+            return true;
+        } else {
+            return super.onSyncedBlockEvent(type, data);
+        }
+    }
+
+    public void triggerAnimation() {
+        if (this.animationStage == AnimationStage.WEST) {
+            this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, 3);
+        }
+        if (this.animationStage == AnimationStage.SOUTH) {
+            this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, 2);
+        }
+        if (this.animationStage == AnimationStage.EAST) {
+            this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, 1);
+        }
+        if (this.animationStage == AnimationStage.NORTH) {
+            this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, 0);
+        }
     }
 
     public void activate(PlayerEntity player) {
-        boolean dirty = false;
-        if (!this.getWorld().isClient) {
+        if (this.animationProgress % 1.0 == 0.0) {
+            boolean dirty = false;
+
             GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(SimpleQuernRecipeTypes.GRINDING, this, this.world).orElse(null);
             if (this.canAcceptRecipeOutput(recipe)) {
-                this.grindTime++;
+                this.triggerAnimation();
+                if (!this.getWorld().isClient) {
+                    this.currentGrindTime++;
 
-                rotateClockwise(world, world.getBlockState(pos), pos);
-
-                if (this.grindTime > recipe.getGrindTime()) {
-                    this.inventory.get(1).damage(1, player, (pp) -> {
-                    });
-                    this.grindTime = 0;
-                    this.craftRecipe(recipe);
-                    world.playSound(null, this.pos, SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 1f, 1f);
-                    dirty = true;
+                    if (this.currentGrindTime > recipe.getGrindTime()) {
+                        this.inventory.get(1).damage(1, player, (pp) -> {
+                        });
+                        this.currentGrindTime = 0;
+                        this.craftRecipe(recipe);
+                        world.playSound(null, this.pos, SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 1f, 1f);
+                        dirty = true;
+                    }
                 }
             }
-        }
-        if (dirty) markDirty();
-    }
 
-    private void rotateClockwise(World world, BlockState state, BlockPos pos) {
-        if (!state.rotate(BlockRotation.CLOCKWISE_90).canPlaceAt(world, pos)) return;
-        world.setBlockState(pos, state.rotate(BlockRotation.CLOCKWISE_90));
-        world.updateNeighbor(pos, state.getBlock(), pos);
+            if (dirty) {
+                markDirty();
+                sync();
+            }
+        }
     }
 
     protected boolean canAcceptRecipeOutput(GrindingRecipe recipe) {
@@ -174,6 +297,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
             }
 
             markDirty();
+            sync();
         }
     }
 
@@ -224,15 +348,17 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        markDirty();
         updateState();
+        markDirty();
+        sync();
         return Inventories.splitStack(this.inventory, slot, amount);
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        markDirty();
         updateState();
+        markDirty();
+        sync();
         return Inventories.removeStack(this.inventory, slot);
     }
 
@@ -245,22 +371,16 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
         }
         updateState();
         markDirty();
+        sync();
     }
 
     public void updateState() {
-        if (inventory.get(1).getItem() instanceof Handstone) {
-            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, true));
-        } else {
-            world.setBlockState(pos, world.getBlockState(pos).with(QuernBlock.HANDSTONE, false));
-            this.grindTime = 0;
-        }
-
         if (inventory.get(0).isEmpty()) {
-            this.grindTime = 0;
+            this.currentGrindTime = 0;
         }
 
         GrindingRecipe recipe = this.getWorld().getRecipeManager().getFirstMatch(SimpleQuernRecipeTypes.GRINDING, this, this.world).orElse(null);
-        this.grindRequired = recipe != null ? recipe.getGrindTime() : 1;
+        this.completeGrindTime = recipe != null ? recipe.getGrindTime() : this.completeGrindTime;
     }
 
     @Override
@@ -290,6 +410,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
     public void clear() {
         this.inventory.clear();
         markDirty();
+        sync();
     }
 
     @Override
@@ -316,5 +437,54 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Si
 
     public PropertyDelegate getPropertyDelegate() {
         return this.propertyDelegate;
+    }
+
+    @Override
+    public void fromClientTag(CompoundTag tag) {
+        fromTag(null, tag);
+    }
+
+    @Override
+    public CompoundTag toClientTag(CompoundTag tag) {
+        toTag(tag);
+        return tag;
+    }
+
+    public static enum AnimationStage {
+        NORTH,
+        TO_EAST,
+        EAST,
+        TO_SOUTH,
+        SOUTH,
+        TO_WEST,
+        WEST,
+        TO_NORTH;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case NORTH: return "NORTH";
+                case TO_EAST: return "TO_EAST";
+                case EAST: return "EAST";
+                case TO_SOUTH: return "TO_SOUTH";
+                case SOUTH: return "SOUTH";
+                case TO_WEST: return "TO_WEST";
+                case WEST: return "WEST";
+                case TO_NORTH: return "TO_NORTH";
+            }
+            return "";
+        }
+
+        public static AnimationStage fromString(String s) {
+            if (s.toLowerCase().equals("north")) return NORTH;
+            if (s.toLowerCase().equals("to_east")) return TO_EAST;
+            if (s.toLowerCase().equals("east")) return EAST;
+            if (s.toLowerCase().equals("to_south")) return TO_SOUTH;
+            if (s.toLowerCase().equals("south")) return SOUTH;
+            if (s.toLowerCase().equals("to_west")) return TO_WEST;
+            if (s.toLowerCase().equals("west")) return WEST;
+            if (s.toLowerCase().equals("to_north")) return TO_NORTH;
+            return NORTH;
+        }
     }
 }
