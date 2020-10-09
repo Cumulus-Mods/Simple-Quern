@@ -31,8 +31,10 @@ import net.minecraft.world.World;
 public class QuernBlock extends BlockWithEntity {
 
     private static final VoxelShape EMPTY = VoxelShapes.union(
-            Block.createCuboidShape(0, 0, 0, 16, 12, 16),
-            Block.createCuboidShape(6, 12, 6, 10, 16, 10));
+            Block.createCuboidShape(0, 0, 0, 16, 8, 16),
+            Block.createCuboidShape(6, 8, 6, 10, 13, 10));
+
+    private static final VoxelShape OCCUPIED = Block.createCuboidShape(0, 0, 0, 16, 14, 16);
 
     public QuernBlock() {
         super(FabricBlockSettings.of(Material.STONE).nonOpaque().strength(3.5f, 3.5f).breakByTool(FabricToolTags.PICKAXES).sounds(BlockSoundGroup.STONE));
@@ -104,7 +106,7 @@ public class QuernBlock extends BlockWithEntity {
     @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return (world.getBlockEntity(pos) != null && ((QuernBlockEntity) world.getBlockEntity(pos)).hasHandstone()) ? VoxelShapes.fullCube() : EMPTY;
+        return (world.getBlockEntity(pos) != null && ((QuernBlockEntity) world.getBlockEntity(pos)).hasHandstone()) ? OCCUPIED : EMPTY;
     }
 
 }
