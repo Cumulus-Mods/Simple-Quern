@@ -7,9 +7,14 @@
   "authors": [
     "Vaerian"
   ],
+  "contributors": [
+    "B0undaryBreaker",
+    "Sakira",
+    "Brotazoa"
+  ],
   "contact": {
-    "homepage": "https://github.com/Cumulus-Mods/Simple-Quern",
-    "sources": "https://github.com/Cumulus-Modss/Simple-Quern"
+    "homepage": "https://github.com/CumulusMC/Simple-Quern",
+    "sources": "https://github.com/CumulusMC/Simple-Quern"
   },
   "license": "MIT",
   "icon": "assets/simplequern/icon.png",

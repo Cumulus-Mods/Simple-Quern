@@ -1,16 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "SGS",
-    "LSL",
-    "LPL"
+    " L ",
+    "GLG",
+    "SSS"
   ],
   "key": {
     "L": {
       "tag": "minecraft:logs"
-    },
-    "P": {
-      "tag": "minecraft:planks"
     },
     "S": {
       "item": "minecraft:stone"

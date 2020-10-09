@@ -58,7 +58,7 @@ public class GrindingRecipe implements Recipe<Inventory> {
 
     @Override
     public Identifier getId() {
-        return this.id;
+        return null;
     }
 
     public boolean validInput(ItemStack stack) {

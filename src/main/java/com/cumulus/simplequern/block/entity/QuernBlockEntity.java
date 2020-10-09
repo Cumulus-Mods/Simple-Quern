@@ -398,7 +398,7 @@ public class QuernBlockEntity extends LockableContainerBlockEntity implements Ti
             case 0:
                 return true;
             case 1:
-                return inventory.get(1).getItem() instanceof Handstone;
+                return getToolStack().isEmpty() && stack.getItem() instanceof Handstone;
             case 2:
                 return false;
             default:
