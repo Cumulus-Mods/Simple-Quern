@@ -4,11 +4,11 @@
     "type": "item",
     "id": "minecraft:gravel"
   },
-  "tier": 1,
+  "tier": 2,
   "time": 5,
   "output": {
     "type": "item",
     "id": "minecraft:sand",
-    "count": 1
+    "count": 2
   }
 }

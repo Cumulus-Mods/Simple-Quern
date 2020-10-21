@@ -2,13 +2,13 @@
   "type": "simplequern:grinding",
   "input": {
     "type": "item",
-    "id": "minecraft:stone"
+    "id": "minecraft:charcoal"
   },
   "tier": 2,
   "time": 5,
   "output": {
     "type": "item",
-    "id": "minecraft:gravel",
+    "id": "techreborn:charcoal_dust",
     "count": 2
   }
 }
