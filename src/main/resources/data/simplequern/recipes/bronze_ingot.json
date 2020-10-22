@@ -2,13 +2,13 @@
   "type": "simplequern:grinding",
   "input": {
     "type": "item",
-    "id": "minecraft:stone"
+    "id": "techreborn:bronze_ingot"
   },
   "tier": 2,
   "time": 5,
   "output": {
     "type": "item",
-    "id": "minecraft:gravel",
-    "count": 2
+    "id": "techreborn:bronze_dust",
+    "count": 1
   }
 }
