@@ -1,0 +1,14 @@
+{
+  "type": "simplequern:grinding",
+  "input": {
+    "type": "tag",
+    "id": "appliedenergistics2:fluix_crystal"
+  },
+  "tier": 2,
+  "time": 5,
+  "output": {
+    "type": "item",
+    "id": "appliedenergistics2:fluix_dust",
+    "count": 1
+  }
+}

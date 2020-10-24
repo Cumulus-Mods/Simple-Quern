@@ -1,0 +1,14 @@
+{
+  "type": "simplequern:grinding",
+  "input": {
+    "type": "tag",
+    "id": "c:wheat_crops"
+  },
+  "tier": 2,
+  "time": 5,
+  "output": {
+    "type": "item",
+    "id": "appliedenergistics2:flour",
+    "count": 1
+  }
+}

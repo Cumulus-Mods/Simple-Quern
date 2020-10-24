@@ -1,12 +1,6 @@
 package com.cumulus.simplequern;
 
-import com.cumulus.simplequern.init.SimpleQuernBlocks;
-import com.cumulus.simplequern.init.SimpleQuernBlockEntityTypes;
-import com.cumulus.simplequern.init.SimpleQuernItems;
-import com.cumulus.simplequern.init.SimpleQuernStats;
-import com.cumulus.simplequern.init.SimpleQuernRecipeSerializers;
-import com.cumulus.simplequern.init.SimpleQuernRecipeTypes;
-import com.cumulus.simplequern.init.SimpleQuernScreenHandlers;
+import com.cumulus.simplequern.init.*;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 
@@ -17,6 +11,7 @@ public class SimpleQuern implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        SimpleQuernCompat.onInitialize();
         SimpleQuernStats.onInitialize();
         SimpleQuernRecipeSerializers.onInitialize();
         SimpleQuernRecipeTypes.onInitialize();

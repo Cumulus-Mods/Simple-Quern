@@ -1,0 +1,14 @@
+{
+  "type": "simplequern:grinding",
+  "input": {
+    "type": "tag",
+    "id": "c:certus_quartz_ores"
+  },
+  "tier": 2,
+  "time": 5,
+  "output": {
+    "type": "loot_table",
+    "id": "appliedenergistics2:certus_quartz_ore",
+    "count": 1
+  }
+}
