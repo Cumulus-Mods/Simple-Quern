@@ -2,7 +2,7 @@
   "type": "simplequern:grinding",
   "input": {
     "type": "item",
-    "id": "minecraft:gold_ore"
+    "id": "minecraft:nether_gold_ore"
   },
   "tier": 2,
   "time": 5,
